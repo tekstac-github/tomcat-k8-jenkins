@@ -2,7 +2,7 @@
 <body>
 <h2>Hello World!</h2>
 <p>
-New build for pipeline 6....
+DevOps plus test content latest1....
 </p>
 </body>
 </html>
