@@ -44,7 +44,7 @@ pipeline {
         stage('Push image') {
             steps {
                 script {
-                    docker.withRegistry('https://localhost:5000', 'docker-credentials') {
+                    docker.withRegistry('http://localhost:5000', 'docker-credentials') {
                         app.push("${env.BUILD_NUMBER}")
                         app.push("latest")
                     }
