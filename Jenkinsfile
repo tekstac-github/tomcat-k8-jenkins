@@ -70,7 +70,7 @@ pipeline {
 
         stage('Deploy on K8') {
             steps {
-                sh 'kubectl apply -f deployment.yaml'
+                sh 'sudo -u student kubectl apply -f deployment.yaml'
                 
             }
         }
