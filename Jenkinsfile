@@ -57,7 +57,7 @@ pipeline {
                 script {
                         sh """
                         kubectl create secret docker-registry docker-registry-secret \
-                          --docker-server=https://localhost:5000 \
+                          --docker-server=http://localhost:5000 \
                           --docker-username=admin \
                           --docker-password=admin \
                           --docker-email=you@example.com \
