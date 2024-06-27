@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_REGISTRY_CREDENTIALS = credentials('docker-credentials')
+    }
+
     stages {
         stage('Checkout Code') {
             steps {
@@ -52,9 +56,26 @@ pipeline {
             }
         }
 
+        stage('Create Docker Registry Secret') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'docker-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                        sh """
+                        kubectl create secret docker-registry docker-registry-secret \
+                          --docker-server=https://localhost:5000 \
+                          --docker-username=$DOCKER_USERNAME \
+                          --docker-password=$DOCKER_PASSWORD \
+                          --docker-email=you@example.com \
+                          --dry-run=client -o yaml | kubectl apply -f -
+                        """
+                    }
+                }
+            }
+        }
+
         stage('Deploy on K8') {
             steps {
-                sh 'kubectl apply -f deployment.yaml'
+                sh 'kubectl apply -f deployment-service.yaml'
             }
         }
     }
