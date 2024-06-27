@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcatservice
+  labels:
+    app: javaservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: javaservice
+  template:
+    metadata:
+      labels:
+        app: javaservice
+    spec:
+      containers:
+      - name: tomcatservice
+        image: localhost:5000/jenkinsci-cd/webserver
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+      imagePullSecrets:
+      - name: docker-registry-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tomcatservice
+spec:
+  selector:
+    app: javaservice
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
+
