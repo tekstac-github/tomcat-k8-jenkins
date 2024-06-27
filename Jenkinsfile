@@ -10,7 +10,8 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh '''#!/bin/bash
+                sh '''
+                    #!/bin/bash
                     /opt/maven/bin/mvn clean install -Dmaven.test.skip=true
                 '''
             }
@@ -51,9 +52,9 @@ pipeline {
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Deploy on K8') {
             steps {
-                sh 'docker run -d -p 80:80 localhost:5000/jenkinsci-cd/webserver &'
+                sh 'kubectl apply -f deployment.yaml'
             }
         }
     }
