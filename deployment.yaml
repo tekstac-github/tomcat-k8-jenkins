@@ -15,7 +15,7 @@ spec:
         app: javaservice
     spec:
       containers:
-      - name: tomcatservice
+      - name: javaservice
         image: localhost:5000/jenkinsci-cd/webserver
         imagePullPolicy: IfNotPresent
         ports:
