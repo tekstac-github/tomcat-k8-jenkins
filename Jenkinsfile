@@ -56,7 +56,7 @@ pipeline {
             steps {
                 script {
                         sh """
-                        sudo -u student kubectl create secret docker-registry docker-registry-secret \
+                        echo "student" | sudo -S -u student kubectl create secret docker-registry docker-registry-secret \
                           --docker-server=http://localhost:5000 \
                           --docker-username=admin \
                           --docker-password=admin \
@@ -70,7 +70,7 @@ pipeline {
 
         stage('Deploy on K8') {
             steps {
-                sh 'sudo -u student kubectl apply -f deployment.yaml'
+                sh 'echo "student" | sudo -S -u student kubectl apply -f deployment.yaml'
                 
             }
         }
