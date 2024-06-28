@@ -56,7 +56,7 @@ pipeline {
             steps {
                 script {
                         sh """
-                        kubectl create secret docker-registry docker-registry-secret \
+                        sudo -u student kubectl create secret docker-registry docker-registry-secret \
                           --docker-server=http://localhost:5000 \
                           --docker-username=admin \
                           --docker-password=admin \
